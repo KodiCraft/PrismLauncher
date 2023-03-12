@@ -95,6 +95,15 @@ void Download::executeTask()
     }
 
     QNetworkRequest request(m_url);
+
+    //! VERY UNSAFE
+    //! DO NOT SHIP THIS
+    // Disable SSL
+    auto sslConfig = QSslConfiguration::defaultConfiguration();
+    sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+    sslConfig.setProtocol(QSsl::TlsV1_2);
+    request.setSslConfiguration(sslConfig);
+
     m_state = m_sink->init(request);
     switch (m_state) {
         case State::Succeeded:

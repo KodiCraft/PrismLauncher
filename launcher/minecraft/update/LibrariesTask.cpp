@@ -29,14 +29,15 @@ void LibrariesTask::executeTask()
     {
         for (auto lib : pool)
         {
-            if(!lib)
-            {
-                emitFailed(tr("Null jar is specified in the metadata, aborting."));
-                return false;
-            }
+            // if(!lib)
+            // {
+            //     emitFailed(tr("Null jar is specified in the metadata, aborting."));
+            //     return false;
+            // }
             auto dls = lib->getDownloads(inst->runtimeContext(), metacache.get(), errors, localPath);
             for(auto dl : dls)
             {
+                qDebug() << "Adding download action for: " << dl->url();
                 downloadJob->addNetAction(dl);
             }
         }
